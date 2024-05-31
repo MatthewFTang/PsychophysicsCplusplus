@@ -8,7 +8,9 @@
 #include <cmath>
 
 void Dot::draw() {
-    DrawCircle(x, y, radius, color);                         // Draw a color-filled circle
+    int x1 = std::floor(x);
+    int y1 = std::floor(y);
+    DrawCircle(x1 + xOffset, y1 + yOffset, radius, color);                         // Draw a color-filled circle
     update();
 }
 
@@ -20,37 +22,39 @@ void Dot::update() {
     }
 }
 
-bool Dot::outBounds() {
-    float dist = (x - 400) * (x - 400) + (y - 400) * (y - 400);
-
-    return dist > 350 * 350;
+bool Dot::outBounds() const {
+    int dist = (x - aperture / 2) * (x - aperture / 2) + (y - aperture / 2) * (y - aperture / 2);
+    return dist > (aperture * aperture) / 4;
 }
 
 void Dot::wrapCoordinates() {
-//    x = 800 - x;
-//    y = 800 - y;
-    while (outBounds()) {
-        x = (std::rand() % 800);
-        y = (std::rand() % 800);
-    }
+
+    x = aperture - x;
+    y = aperture - y;
 
 }
 
 Dot::Dot() {
-    this->x = (std::rand() % 800);
-    this->y = (std::rand() % 800);
+    this->color = WHITE;
+
+}
+
+
+void Dot::make(int aperture, float direction, float speed, float radius) {
+    this->aperture = aperture;
+    this->radius = radius;
+    this->speed = speed;
+    this->direction = direction;
+    int display = GetCurrentMonitor();
+    this->xOffset = GetMonitorWidth(display) / 2 - aperture / 2;
+    this->yOffset = GetMonitorHeight(display) / 2 - aperture / 2;
+
+    this->x = (std::rand() % aperture);
+    this->y = (std::rand() % aperture);
+
     if (outBounds()) {
-        Dot();
+        make(aperture, direction, speed, radius);
     }
-
-    this->radius = 5;
-    float temp_direction = std::rand() % 360;
-    temp_direction = temp_direction * PI / 180;
-    this->direction = temp_direction;
-    this->speed = 1.0f;
-    this->color = Color({(unsigned char) (std::rand() % 255), (unsigned char) (std::rand() % 255),
-                         (unsigned char) (std::rand() % 255), 255});
-
 }
 
 

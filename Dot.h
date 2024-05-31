@@ -16,20 +16,25 @@ public:
 
     void draw();
 
+    void make(int aperture, float direction, float speed, float radius);
 
-private:
     void update();
 
-    bool outBounds();
+
+private:
+
+    bool outBounds() const;
 
     void wrapCoordinates();
 
-    int x{};
-    int y{};
+    float x{};
+    float y{};
     float radius{};
     Color color{};
     float direction{};
     float speed{};
+    int aperture;
+    int xOffset, yOffset;
 
 };
 
