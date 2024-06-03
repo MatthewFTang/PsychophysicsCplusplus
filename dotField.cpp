@@ -16,9 +16,11 @@ void dotField::run() {
 
 dotField::dotField() = default;
 
-void dotField::make(int n_dots, float coherence, int aperture, float direction, float speed, float radius) {
+void
+dotField::make(int n_dots, float coherence, int aperture, float direction, float speed, int radius, Color _color) {
     int n_coherent = std::floor((float) n_dots * coherence);
     float dir;
+    dots.clear();
     for (int i = 0; i < n_dots; i++) {
         if (i < n_coherent) {
             dir = direction;
@@ -28,7 +30,7 @@ void dotField::make(int n_dots, float coherence, int aperture, float direction, 
             dir = (float) (std::rand() % 360) * PI / 180;
         }
         Dot dot;
-        dot.make(aperture, dir, speed, radius);
+        dot.make((float) aperture, dir, speed, (float) radius, _color);
         dots.push_back(dot);
     }
 }

@@ -6,19 +6,33 @@
 #pragma once
 
 #include <raylib.h>
+#include <chrono>
 
 class responseScreen {
 public :
-    void draw();
+    responseScreen();
 
-    responseScreen(int aperture, Color col, float line_width);
+    void run();
 
-    bool beenClicked = false;
+    void set(int aperture, Color col, float line_width, float presentedAngle);
+
+    bool finished = false;
+
+    float showResponseAngle() const;
 
 private:
-    int aperture;
-    Color color;
-    float line_width;
+    int aperture{};
+    float responseAngle, line_width, xOffset, yOffset, actualAngle;
+    std::chrono::high_resolution_clock::time_point clickTime;
+    bool beenClicked = false;
+    Color color{};
+
+    void getResponse();
+
+    void giveFeedback();
+
+    void drawAngle(float angle, Color _color);
+
 };
 
 

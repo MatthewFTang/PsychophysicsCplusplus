@@ -5,24 +5,72 @@
 #include "responseScreen.h"
 #include <raylib.h>
 #include <cmath>
+#include <chrono>
 
-responseScreen::responseScreen(int aperture, Color col, float line_width) {
-    this->aperture = aperture;
+void responseScreen::set(int _aperture, Color col, float _line_width, float presentedAngle) {
+    this->aperture = _aperture;
     this->color = col;
-    this->line_width = line_width;
+    this->line_width = _line_width;
+    this->xOffset = (float) GetScreenWidth() / 2;
+    this->yOffset = (float) GetScreenHeight() / 2;
+    this->actualAngle = presentedAngle;
+    beenClicked = false;
+    finished = false;
 }
 
-void responseScreen::draw() {
-    Vector2 mousePos = GetMousePosition();
-    float angle = std::atan2(mousePos.y - aperture / 2, mousePos.x - aperture / 2);
-    float x = (aperture / 2 - 10) * std::cos(angle);
-    float y = (aperture / 2 - 10) * std::sin(angle);
-    DrawLine(aperture / 2, aperture / 2, x + aperture / 2, y + aperture / 2, color);
-    DrawRing(Vector2{(float) aperture / 2, (float) aperture / 2}, (float) aperture / 2 - 10 - line_width,
-             (float) aperture / 2 - 10,
-             0, 360, 120,
-             color);
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        beenClicked = true;
+void responseScreen::run() {
+    if (!beenClicked) {
+        getResponse();
+    }
+    if (beenClicked) {
+        giveFeedback();
+        std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(
+                currentTime - clickTime);
+        if (time_span.count() > 0.5) {
+            finished = true;
+
+        }
     }
 }
+
+void responseScreen::getResponse() {
+    Vector2 mousePos = GetMousePosition();
+    float angle = std::atan2(mousePos.y - yOffset, mousePos.x - xOffset);
+
+    drawAngle(angle, color);
+
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        responseAngle = angle;
+        clickTime = std::chrono::high_resolution_clock::now();
+        beenClicked = true;
+
+    }
+}
+
+void responseScreen::giveFeedback() {
+    drawAngle(responseAngle, color);
+    drawAngle(actualAngle, BLUE);
+
+}
+
+float responseScreen::showResponseAngle() const {
+    return responseAngle;
+}
+
+void responseScreen::drawAngle(float angle, Color _color) {
+    float x = ((float) aperture / 2 - 10) * std::cos(angle);
+    float y = ((float) aperture / 2 - 10) * std::sin(angle);
+    DrawRing(Vector2{(float) xOffset, (float) yOffset},
+             (float) aperture / 2 - 10 - line_width,
+             (float) aperture / 2 - 10,
+             0, 360, 120,
+             _color);
+    DrawLineEx(Vector2({xOffset + x, yOffset + y}), Vector2({xOffset, yOffset}), line_width, _color);
+    DrawPoly(Vector2{(float) xOffset + x, (float) yOffset + y},
+             3, 10, angle * 180 / PI, _color);
+
+}
+
+
+responseScreen::responseScreen() = default;

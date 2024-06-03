@@ -15,7 +15,9 @@ add_executable(${PROJECT_NAME} main.cpp
         responseScreen.cpp
         responseScreen.h
         Application.cpp
-        Application.h)
+        Application.h
+        Experiment.cpp
+        Experiment.h)
 
 target_link_libraries(${PROJECT_NAME} raylib)
 

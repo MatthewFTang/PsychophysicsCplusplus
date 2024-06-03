@@ -16,7 +16,7 @@ public:
 
     void draw();
 
-    void make(int aperture, float direction, float speed, float radius);
+    void make(float aperture, float direction, float speed, float radius, Color color);
 
     void update();
 
@@ -24,6 +24,8 @@ public:
 private:
 
     bool outBounds() const;
+
+    void makeDotPosition();
 
     void wrapCoordinates();
 
@@ -33,8 +35,8 @@ private:
     Color color{};
     float direction{};
     float speed{};
-    int aperture;
-    int xOffset, yOffset;
+    float aperture{};
+    int xOffset{}, yOffset{};
 
 };
 

@@ -6,6 +6,7 @@
 
 #include <raylib.h>
 #include "dotField.h"
+#include "Experiment.h"
 
 #pragma once
 
@@ -15,11 +16,15 @@ private:
 
     void InitExperiment();
 
+
     Color backgroundColor = {128, 128, 128};
-    dotField field;
-    int frameCount = 0;
+    Experiment experiment;
+    Font font;
 public:
     void Run();
+
+    Application();
+
 };
 
 

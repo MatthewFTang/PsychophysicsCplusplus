@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
 
 void Dot::draw() {
     int x1 = std::floor(x);
@@ -15,46 +16,58 @@ void Dot::draw() {
 }
 
 void Dot::update() {
-    x += speed * std::cos(direction);
-    y += speed * std::sin(direction);
+
+
     if (outBounds()) {
         wrapCoordinates();
     }
+
+    x = x + speed * std::cos(direction);
+    y = y + speed * std::sin(direction);
 }
 
 bool Dot::outBounds() const {
-    int dist = (x - aperture / 2) * (x - aperture / 2) + (y - aperture / 2) * (y - aperture / 2);
-    return dist > (aperture * aperture) / 4;
+    float dist = (x * x + y * y);
+    return dist > aperture * aperture / 4;
 }
 
 void Dot::wrapCoordinates() {
-
-    x = aperture - x;
-    y = aperture - y;
-
-}
-
-Dot::Dot() {
-    this->color = WHITE;
+    x = -x;
+    y = -y;
 
 }
 
 
-void Dot::make(int aperture, float direction, float speed, float radius) {
-    this->aperture = aperture;
-    this->radius = radius;
-    this->speed = speed;
-    this->direction = direction;
-    int display = GetCurrentMonitor();
-    this->xOffset = GetMonitorWidth(display) / 2 - aperture / 2;
-    this->yOffset = GetMonitorHeight(display) / 2 - aperture / 2;
+Dot::Dot() = default;
 
-    this->x = (std::rand() % aperture);
-    this->y = (std::rand() % aperture);
 
-    if (outBounds()) {
-        make(aperture, direction, speed, radius);
+void Dot::make(float _aperture, float _direction, float _speed, float _radius, Color _color) {
+    this->aperture = _aperture;
+    this->radius = _radius;
+    this->speed = _speed;
+    this->color = _color;
+    this->direction = _direction;
+    this->yOffset = GetScreenHeight() / 2;
+    this->xOffset = GetScreenWidth() / 2;
+
+    makeDotPosition();
+    while (outBounds()) {
+        makeDotPosition();
     }
+
+}
+
+void Dot::makeDotPosition() {
+
+    float x_temp = (float) std::rand() / (float) RAND_MAX;
+    x_temp = x_temp * aperture - aperture / 2;
+
+    float y_temp = (float) std::rand() / (float) RAND_MAX;
+    y_temp = y_temp * aperture - aperture / 2;
+    x = x_temp;
+    y = y_temp;
+
+
 }
 
 

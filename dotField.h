@@ -17,10 +17,11 @@ public :
 
     void run();
 
-    void make(int n_dots, float coherence, int aperture, float direction, float speed, float radius);
+    void make(int n_dots, float coherence, int aperture, float direction, float speed, int radius, Color color);
 
 private:
     std::vector<Dot> dots;
+
 };
 
 
