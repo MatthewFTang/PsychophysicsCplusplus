@@ -2,7 +2,7 @@
 // Created by Matthew F Tang on 31/5/2024.
 //
 
-#include "Experiment.h"
+#include "../include/Experiment.h"
 
 #include <fstream>
 #include <iostream>

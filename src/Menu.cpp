@@ -2,7 +2,7 @@
 // Created by Matthew F Tang on 21/6/2024.
 //
 
-#include "Menu.h"
+#include "../include/Menu.h"
 
 #include <fmt/core.h>
 

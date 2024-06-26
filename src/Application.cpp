@@ -2,7 +2,7 @@
 // Created by Matthew F Tang on 31/5/2024.
 //
 
-#include "Application.h"
+#include "../include/Application.h"
 
 #include <raylib.h>
 Application::Application() = default;

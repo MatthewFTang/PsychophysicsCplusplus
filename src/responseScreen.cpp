@@ -2,7 +2,7 @@
 // Created by Matthew F Tang on 31/5/2024.
 //
 
-#include "responseScreen.h"
+#include "../include/responseScreen.h"
 
 #include <raylib.h>
 
