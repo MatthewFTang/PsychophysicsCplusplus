@@ -18,6 +18,7 @@ public:
 
     void make(int _monitorHeight, int _monitorWidth);
     void run();
+
     std::vector<float> getCoherenceLevels() const { return coherence_levels; }
     std::vector<float> getSpeed() const { return speed_levels; }
     int getNDots() const { return n_dots; }

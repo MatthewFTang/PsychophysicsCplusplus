@@ -12,10 +12,16 @@
 
 
 class Application {
+
+public:
+    Application();
+    void Run();
+
 private:
     void Loop();
     void InitExperiment();
     void loadParams();
+    
     Color backgroundColor = {128, 128, 128};
     Font font{};
 
@@ -23,9 +29,4 @@ private:
     Experiment experiment;
 
     ExperimentParams params;
-
-public:
-    void Run();
-
-    Application();
 };

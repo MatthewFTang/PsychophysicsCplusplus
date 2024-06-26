@@ -14,19 +14,16 @@ public:
     responseScreen();
 
     void run();
-
     void set(int aperture, Color col, float line_width, float presentedAngle);
+    float showResponseAngle() const;
 
     bool isResponseFinished() const { return finished; }
     void setFinished(bool _finished) { finished = _finished; }
 
-    float showResponseAngle() const;
 
 private:
     void getResponse();
-
     void giveFeedback() const;
-
     void drawAngle(float angle, Color _color) const;
 
 
