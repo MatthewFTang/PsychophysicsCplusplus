@@ -3,11 +3,14 @@
 //
 
 #include "responseScreen.h"
-#include <raylib.h>
-#include <cmath>
-#include <chrono>
 
-void responseScreen::set(int _aperture, Color col, float _line_width, float presentedAngle) {
+#include <raylib.h>
+
+#include <chrono>
+#include <cmath>
+
+void responseScreen::set(int _aperture, Color col, float _line_width,
+                         float presentedAngle) {
     this->aperture = _aperture;
     this->color = col;
     this->line_width = _line_width;
@@ -24,12 +27,13 @@ void responseScreen::run() {
     }
     if (beenClicked) {
         giveFeedback();
-        std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(
-                currentTime - clickTime);
+        std::chrono::high_resolution_clock::time_point currentTime =
+                std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> time_span =
+                std::chrono::duration_cast<std::chrono::duration<double>>(currentTime -
+                                                                          clickTime);
         if (time_span.count() > 0.5) {
             finished = true;
-
         }
     }
 }
@@ -44,33 +48,24 @@ void responseScreen::getResponse() {
         responseAngle = angle;
         clickTime = std::chrono::high_resolution_clock::now();
         beenClicked = true;
-
     }
 }
 
-void responseScreen::giveFeedback() {
+void responseScreen::giveFeedback() const {
     drawAngle(responseAngle, color);
     drawAngle(actualAngle, BLUE);
-
 }
 
-float responseScreen::showResponseAngle() const {
-    return responseAngle;
-}
+float responseScreen::showResponseAngle() const { return responseAngle; }
 
-void responseScreen::drawAngle(float angle, Color _color) {
+void responseScreen::drawAngle(float angle, Color _color) const {
     float x = ((float) aperture / 2 - 10) * std::cos(angle);
     float y = ((float) aperture / 2 - 10) * std::sin(angle);
-    DrawRing(Vector2{(float) xOffset, (float) yOffset},
-             (float) aperture / 2 - 10 - line_width,
-             (float) aperture / 2 - 10,
-             0, 360, 120,
-             _color);
-    DrawLineEx(Vector2({xOffset + x, yOffset + y}), Vector2({xOffset, yOffset}), line_width, _color);
-    DrawPoly(Vector2{(float) xOffset + x, (float) yOffset + y},
-             3, 10, angle * 180 / PI, _color);
 
+    DrawLineEx(Vector2({xOffset + x, yOffset + y}), Vector2({xOffset, yOffset}),
+               line_width, _color);
+    DrawPoly(Vector2{xOffset + x, yOffset + y}, 3, 20,
+             angle * 180 / PI, _color);
 }
-
 
 responseScreen::responseScreen() = default;
