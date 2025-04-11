@@ -81,7 +81,7 @@ void Experiment::makeTrialConditions() {
     }
 
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::ranges::shuffle(order, std::default_random_engine(seed));
+    // std::shuffle(order, std::default_random_engine(seed));
 
     conditions = conditions_temp;
     for (int i = 0; i < order.size(); i++) {

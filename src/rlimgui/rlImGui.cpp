@@ -88,7 +88,7 @@ void ReloadFonts(void) {
     fontTexture = (Texture2D *) MemAlloc(sizeof(Texture2D));
     *fontTexture = LoadTextureFromImage(image);
     UnloadImage(image);
-    io.Fonts->TexID = fontTexture;
+    io.Fonts->TexID = io.Fonts->TexID = reinterpret_cast<ImTextureID>(fontTexture);
 }
 
 static const char *GetClipTextCallback(void *) { return GetClipboardText(); }
@@ -642,7 +642,7 @@ void ImGui_ImplRaylib_RenderDrawData(ImDrawData *draw_data) {
             }
 
             ImGuiRenderTriangles(cmd.ElemCount, cmd.IdxOffset, commandList->IdxBuffer,
-                                 commandList->VtxBuffer, cmd.TextureId);
+                                 commandList->VtxBuffer,  reinterpret_cast<void*>(cmd.TextureId));
             rlDrawRenderBatchActive();
         }
     }
