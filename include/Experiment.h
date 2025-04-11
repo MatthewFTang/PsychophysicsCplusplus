@@ -2,8 +2,6 @@
 // Created by Matthew F Tang on 31/5/2024.
 //
 
-#ifndef MOTION_JUDGEMENTS_EXPERIMENT_H
-#define MOTION_JUDGEMENTS_EXPERIMENT_H
 #pragma once
 
 #include <random>
@@ -11,45 +9,43 @@
 
 #include "DotFieldParams.h"
 #include "ExperimentParams.h"
-#include "dotField.h"
-#include "responseScreen.h"
+#include "DotField.h"
+#include "ResponseScreen.h"
 
-class Experiment {
-
+class Experiment
+{
 public:
-    Experiment() : gen(rd()) {}
+  Experiment () : gen_ (rd_ ()) {}
 
-    void run();
-    void onInit(const ExperimentParams &_params);
-    static void displayExperimentInstructions(Font const &font);
+  void Run ();
+  void OnInit (const ExperimentParams &params);
+  static void DisplayExperimentInstructions (Font const &font);
 
 private:
-    void newTrial();
-    void onRender();
-    static void fixationCross();
-    void saveResponse();
-    void writeResults();
-    void makeTrialConditions();
-    static void displayEndScreen();
+  void NewTrial ();
+  void OnRender ();
+  static void FixationCross ();
+  void SaveResponse ();
+  void WriteResults ();
+  void MakeTrialConditions ();
+  static void DisplayEndScreen ();
 
-    void makeFileSaveName();
-    responseScreen response = responseScreen();
-    dotField field = dotField();
+  void MakeFileSaveName ();
+  ResponseScreen response_ = ResponseScreen ();
+  DotField field_ = DotField ();
 
-    std::random_device rd;// random number seed
-    std::mt19937 gen;     // random number generator
-    float generateRandomFloat(float min, float max);
+  std::random_device rd_; // random number seed
+  std::mt19937 gen_;	  // random number generator
+  float GenerateRandomFloat (float min, float max);
 
-    int frameCount = 0;
-    int trialCount = 0;
-    float presented_direction;
-    bool savedFile = false;
-    std::string fileSaveName;
+  int frame_count_ = 0;
+  int trial_count_ = 0;
+  float presented_direction_{};
+  bool saved_file_ = false;
+  std::string file_save_name_;
 
-    ExperimentParams params;
-    DotFieldParams dotFieldParams;
-    std::vector<std::vector<float>> conditions;
-    std::vector<std::vector<float>> results;
+  ExperimentParams params_;
+  DotFieldParams dot_field_params_params_{};
+  std::vector<std::vector<float> > conditions_;
+  std::vector<std::vector<float> > results_;
 };
-
-#endif// MOTION_JUDGEMENTS_EXPERIMENT_H

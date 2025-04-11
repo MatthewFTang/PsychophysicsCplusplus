@@ -9,60 +9,76 @@
 
 #include "raylib.h"
 
-void Dot::draw() {
-    auto x1 = (int) std::floor(x);//
-    auto y1 = (int) std::floor(y);
-    DrawCircle(x1 + xOffset, y1 + yOffset, radius,
-               color);// Draw a color-filled circle
-    update();
+void
+Dot::Draw ()
+{
+  const auto x1 = static_cast<int> (std::floor (x_)); //
+  const auto y1 = static_cast<int> (std::floor (y_));
+  DrawCircle (x1 + x_offset_, y1 + y_offset_, radius_,
+	      color_); // Draw a color-filled circle
+  Update ();
 }
 
-void Dot::update() {
-
-    if (outBounds()) {// wrap dots around aperture if outside the circle
-        wrapCoordinates();
+void
+Dot::Update ()
+{
+  if (OutBounds ())
+    {
+      // wrap dots around aperture if outside the circle
+      WrapCoordinates ();
     }
-    // could be calculated when dots created
-    x = x + speed * std::cos(direction);
-    y = y + speed * std::sin(direction);
+  // could be calculated when dots created
+  x_ = x_ + speed_ * std::cos (direction_);
+  y_ = y_ + speed_ * std::sin (direction_);
 }
 
-bool Dot::outBounds() const {
-    float dist = (x * x + y * y);
-    return dist > aperture * aperture / 4;
+bool
+Dot::OutBounds () const
+{
+  const float dist = (x_ * x_ + y_ * y_);
+  return dist > aperture_ * aperture_ / 4;
 }
 
-void Dot::wrapCoordinates() {
-    x = -x;
-    y = -y;
+void
+Dot::WrapCoordinates ()
+{
+  x_ = -x_;
+  y_ = -y_;
 }
 
-Dot::Dot() = default;
+Dot::Dot () = default;
 
-void Dot::make(float _aperture, float _direction, float _speed, float _radius,
-               Color _color, Vector2 centerLocation) {
-    this->aperture = _aperture;
-    this->radius = _radius;
-    this->speed = _speed;
-    this->color = _color;
-    this->direction = _direction;
-    this->yOffset = (int) centerLocation.y;
-    this->xOffset = (int) centerLocation.x;
+void
+Dot::Make (const float aperture, const float direction, const float speed,
+	   const float radius, const Color color, const Vector2 center_location)
+{
+  this->aperture_ = aperture;
+  this->radius_ = radius;
+  this->speed_ = speed;
+  this->color_ = color;
+  this->direction_ = direction;
+  this->y_offset_ = static_cast<int> (center_location.y);
+  this->x_offset_ = static_cast<int> (center_location.x);
 
-    makeDotPosition();
-    while (outBounds()) {
-        makeDotPosition();
+  MakeDotPosition ();
+  while (OutBounds ())
+    {
+      MakeDotPosition ();
     }
 }
 
-void Dot::makeDotPosition() {
-    // all dots are assigned a random x and y position so the centre of the
-    // circle is at 0,0 to make the maths cleaner.
-    float x_temp = (float) std::rand() / (float) RAND_MAX;
-    x_temp = x_temp * aperture - aperture / 2;
+void
+Dot::MakeDotPosition ()
+{
+  // all dots are assigned a random x and y position so the centre of the
+  // circle is at 0,0 to make the maths cleaner.
+  float x_temp
+    = static_cast<float> (std::rand ()) / static_cast<float> (RAND_MAX);
+  x_temp = x_temp * aperture_ - aperture_ / 2;
 
-    float y_temp = (float) std::rand() / (float) RAND_MAX;
-    y_temp = y_temp * aperture - aperture / 2;
-    x = x_temp;
-    y = y_temp;
+  float y_temp
+    = static_cast<float> (std::rand ()) / static_cast<float> (RAND_MAX);
+  y_temp = y_temp * aperture_ - aperture_ / 2;
+  x_ = x_temp;
+  y_ = y_temp;
 }

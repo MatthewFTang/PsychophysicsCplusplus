@@ -2,40 +2,36 @@
 // Created by Matthew F Tang on 30/5/2024.
 //
 
-#ifndef MY_PROJECT_DOT_H
-#define MY_PROJECT_DOT_H
 #pragma once
 
 #include "raylib.h"
 
-class Dot {
-
+class Dot
+{
 public:
-    Dot();
+  Dot ();
 
-    void draw();
+  void Draw ();
 
-    void make(float _aperture, float _direction, float _speed, float _radius,
-              Color _color, Vector2 CenterLocation);
+  void Make (float aperture, float direction, float speed, float radius,
+	     Color color, Vector2 center_location);
 
-    void update();
+  void Update ();
 
 private:
-    bool outBounds() const;
+  [[nodiscard]] bool OutBounds () const;
 
-    void makeDotPosition();
+  void MakeDotPosition ();
 
-    void wrapCoordinates();
+  void WrapCoordinates ();
 
-    float x;
-    float y;
-    float radius;
-    Color color;
-    float direction;
-    float speed;
-    float aperture;
-    int xOffset;
-    int yOffset;
+  float x_{};
+  float y_{};
+  float radius_{};
+  Color color_{};
+  float direction_{};
+  float speed_{};
+  float aperture_{};
+  int x_offset_{};
+  int y_offset_{};
 };
-
-#endif// MY_PROJECT_DOT_H

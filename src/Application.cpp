@@ -5,50 +5,57 @@
 #include "../include/Application.h"
 
 #include <raylib.h>
-Application::Application() = default;
+Application::Application () = default;
 
-void Application::Loop() {
-
-    BeginDrawing();
-    ClearBackground(backgroundColor);
-    experiment.run();
-    DrawFPS(0, 0);
-    EndDrawing();
+void
+Application::Loop ()
+{
+  BeginDrawing ();
+  ClearBackground (background_color_);
+  experiment_.Run ();
+  DrawFPS (0, 0);
+  EndDrawing ();
 }
-void Application::Run() {
+void
+Application::Run ()
+{
+  const int display = GetCurrentMonitor ();
 
-    int display = GetCurrentMonitor();
+  InitWindow (GetMonitorWidth (display), GetMonitorHeight (display),
+	      "Motion judgement");
+  font_ = LoadFontEx ("fonts/FiraCodeNerdFontMono-Regular.ttf", 48, nullptr, 0);
+  SetTargetFPS (60);
+  InitExperiment ();
 
-    InitWindow(GetMonitorWidth(display), GetMonitorHeight(display),
-               "Motion judgement");
-    font = LoadFontEx("fonts/FiraCodeNerdFontMono-Regular.ttf", 48, nullptr, 0);
-    SetTargetFPS(60);
-    InitExperiment();
-
-    while (!WindowShouldClose()) {
-        Loop();
+  while (!WindowShouldClose ())
+    {
+      Loop ();
     }
-    CloseWindow();
+  CloseWindow ();
 }
 
-void Application::InitExperiment() {
-    int display = GetCurrentMonitor();
-    menu.make(GetMonitorHeight(display), GetMonitorWidth(display));
-    menu.run();// show the menu for entering experimental parameters
-    loadParams();
-    experiment.onInit(params);// init experiment with the chosen options
-    Experiment::displayExperimentInstructions(font);
+void
+Application::InitExperiment ()
+{
+  const int display = GetCurrentMonitor ();
+  menu_.Make (GetMonitorHeight (display), GetMonitorWidth (display));
+  menu_.Run (); // show the menu for entering experimental parameters
+  LoadParams ();
+  experiment_.OnInit (params_); // init experiment with the chosen options
+  Experiment::DisplayExperimentInstructions (font_);
 }
 
-void Application::loadParams() {
-    params.n_dots = menu.getNDots();
-    params.aperture = menu.getStimRadius();
-    params.dotRadius = menu.getDotSize();
-    params.condition_repetitions = menu.getConditionReps();
-    params.coherence_levels = menu.getCoherenceLevels();
+void
+Application::LoadParams ()
+{
+  params_.n_dots = menu_.GetNDots ();
+  params_.aperture = menu_.GetStimRadius ();
+  params_.dot_radius = menu_.GetDotSize ();
+  params_.condition_repetitions = menu_.GetConditionReps ();
+  params_.coherence_levels = menu_.GetCoherenceLevels ();
 
-    params.speed_levels = menu.getSpeed();
-    params.subjectID = menu.getParticipantID();
-    params.runNumber = menu.getRunNumber();
-    params.dotColor = menu.getDotColor();
+  params_.speed_levels = menu_.GetSpeed ();
+  params_.subject_id = menu_.GetParticipantId ();
+  params_.run_number = menu_.GetRunNumber ();
+  params_.dot_color = menu_.GetDotColor ();
 }

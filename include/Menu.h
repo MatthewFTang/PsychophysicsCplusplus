@@ -2,8 +2,6 @@
 // Created by Matthew F Tang on 21/6/2024.
 //
 
-#ifndef MOTION_JUDGEMENTS_MENU_H
-#define MOTION_JUDGEMENTS_MENU_H
 #pragma once
 
 #include <raylib.h>
@@ -11,50 +9,52 @@
 #include <vector>
 
 #include "imgui.h"
-class Menu {
 
+class Menu
+{
 public:
-    Menu() = default;
+  Menu () = default;
 
-    void make(int _monitorHeight, int _monitorWidth);
-    void run();
+  void Make (int monitor_height, int monitor_width);
+  void Run ();
 
-    std::vector<float> getCoherenceLevels() const { return coherence_levels; }
-    std::vector<float> getSpeed() const { return speed_levels; }
-    int getNDots() const { return n_dots; }
-    int getStimRadius() const { return stimRadius; }
-    int getDotSize() const { return dotSize; }
-    int getConditionReps() const { return condition_repetitions; }
-    char getParticipantID() const { return participant_ident; };
-    int getRunNumber() const { return run_number; }
-    Color getDotColor() const;
+  [[nodiscard]] std::vector<float> GetCoherenceLevels () const
+  {
+    return coherence_levels_;
+  }
+  [[nodiscard]] std::vector<float> GetSpeed () const { return speed_levels_; }
+  [[nodiscard]] int GetNDots () const { return n_dots_; }
+  [[nodiscard]] int GetStimRadius () const { return stim_radius_; }
+  [[nodiscard]] int GetDotSize () const { return dot_size_; }
+  [[nodiscard]] int GetConditionReps () const { return condition_repetitions_; }
+  [[nodiscard]] char GetParticipantId () const { return participant_ident_; };
+  [[nodiscard]] int GetRunNumber () const { return run_number_; }
+  [[nodiscard]] Color GetDotColor () const;
 
 private:
-    void draw();
+  void Draw ();
 
-    ImGuiWindowFlags window_flags;
-    std::vector<float> makeLevels(float min, float max, int levels) const;
+  ImGuiWindowFlags window_flags_{};
+  static std::vector<float> MakeLevels (float min, float max, int levels);
 
-    int min_coherence = 1;
-    int max_coherence = 50;
-    int n_steps_coherence = 3;
+  int min_coherence_ = 1;
+  int max_coherence_ = 50;
+  int n_steps_coherence_ = 3;
 
-    float min_speed = 1;
-    float max_speed = 10;
-    int n_steps_speed = 1;
+  float min_speed_ = 1;
+  float max_speed_ = 10;
+  int n_steps_speed_ = 1;
 
-    int n_dots = 1000;
-    int stimRadius = 800;
-    int dotSize = 4;
-    char participant_ident;
-    int run_number = 1;
-    int condition_repetitions = 10;
-    bool startClicked = false;
-    float col[3] = {1.0f, 1.0f, 1.0f};
-    int monitorWidth;
-    int monitorHeight;
-    std::vector<float> coherence_levels;
-    std::vector<float> speed_levels;
+  int n_dots_ = 1000;
+  int stim_radius_ = 800;
+  int dot_size_ = 4;
+  char participant_ident_{};
+  int run_number_ = 1;
+  int condition_repetitions_ = 10;
+  bool start_clicked_ = false;
+  float col_[3] = {1.0f, 1.0f, 1.0f};
+  int monitor_width_{};
+  int monitor_height_{};
+  std::vector<float> coherence_levels_;
+  std::vector<float> speed_levels_;
 };
-
-#endif// MOTION_JUDGEMENTS_MENU_H

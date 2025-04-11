@@ -22,8 +22,9 @@ if (NOT raylib_FOUND)
     )
     FetchContent_MakeAvailable(raylib) # Automatically handles population
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # Prevent building Raylib examples
-    add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
-endif()
+    #    add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+    #    add_subdirectory(${raylib_SOURCE_DIR} ${CMAKE_BINARY_DIR}/raylib-build)
+endif ()
 
 # Include Raylib directories
 include_directories(${raylib_INCLUDE_DIRS})
@@ -39,7 +40,7 @@ if (NOT fmt_FOUND)
             DOWNLOAD_EXTRACT_TIMESTAMP OFF
     )
     FetchContent_MakeAvailable(fmt)
-endif()
+endif ()
 
 # ImGui Dependency
 FetchContent_Declare(
@@ -70,9 +71,9 @@ add_executable(${PROJECT_NAME}
         main.cpp
         src/Dot.cpp
         include/Dot.h
-        src/dotField.cpp
-        src/responseScreen.cpp
-        include/responseScreen.h
+        src/DotField.cpp
+        src/ResponseScreen.cpp
+        include/ResponseScreen.h
         src/Application.cpp
         include/Application.h
         src/Experiment.cpp

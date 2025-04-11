@@ -2,19 +2,19 @@
 // Created by Matthew F Tang on 24/6/2024.
 //
 
-#ifndef MOTION_JUDGEMENTS_EXPERIMENTPARAMS_H
-#define MOTION_JUDGEMENTS_EXPERIMENTPARAMS_H
+#pragma once
+
 #include <raylib.h>
 #include <vector>
-struct ExperimentParams {
-    int n_dots;
-    int aperture;
-    int dotRadius;
-    int condition_repetitions;
-    std::vector<float> coherence_levels;
-    std::vector<float> speed_levels;
-    char subjectID;
-    int runNumber;
-    Color dotColor;
+struct ExperimentParams
+{
+  int n_dots;
+  int aperture;
+  int dot_radius;
+  int condition_repetitions;
+  std::vector<float> coherence_levels;
+  std::vector<float> speed_levels;
+  char subject_id;
+  int run_number;
+  Color dot_color;
 };
-#endif//MOTION_JUDGEMENTS_EXPERIMENTPARAMS_H
